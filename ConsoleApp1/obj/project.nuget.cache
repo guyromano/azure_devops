@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "zT5fStP4DqF1YdfshLBtmLd840oMRiXgLAaecOs0zSZlxMRtnc9WlCGQJWjFC1sx5VaSqyrxJG9j+dnwXpJY7A==",
+  "success": true,
+  "projectFilePath": "/home/guy/Hello-World/ConsoleApp1/ConsoleApp1.csproj",
+  "expectedPackageFiles": [
+    "/home/guy/.nuget/packages/microsoft.netcore.app.ref/6.0.30/microsoft.netcore.app.ref.6.0.30.nupkg.sha512",
+    "/home/guy/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.30/microsoft.aspnetcore.app.ref.6.0.30.nupkg.sha512",
+    "/home/guy/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.30/microsoft.netcore.app.host.linux-x64.6.0.30.nupkg.sha512"
+  ],
+  "logs": []
+}
