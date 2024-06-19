@@ -12,3 +12,12 @@ pool:
 steps:
 - script: dotnet build
   displayName: 'dotnet build'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishWebProjects: true
+    zipAfterPublish: True
+  displayName: 'publish to azure artifacts'
