@@ -16,7 +16,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Pipeline.Workspace)/*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.dll'
     nuGetFeedType: 'internal'
     publishWebProjects: true
     zipAfterPublish: True
