@@ -15,6 +15,7 @@ variables:
   Minor: '0'
   Patch: $[counter(variables['Minor'], 1)]
   VER: '$(Major).$(Minor).$(Patch)'
+  NUGET: $(Build.SourceBranch).$(VER)
   isSecond: $[eq(variables['Build.SourceBranch'], 'refs/heads/second')]
   isMain:  $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
 
@@ -51,4 +52,16 @@ stages:
   jobs:
   - job: second
     steps:
-      - script: echo Hello Stage B!
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/*.csproj'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'NUGET'
+
+    - task: NuGetCommand@2
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: 'bc6b2af7-25bf-4811-96bf-46aae8e070ca/e1d1c81f-4ed1-4254-a6d9-cc69b4f33ae8'
