@@ -5,6 +5,7 @@
 
 trigger:
 - main
+- second
 
 pool:
   name: Default
