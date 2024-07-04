@@ -9,6 +9,12 @@ trigger:
 pool:
   name: Default
 
+variables:
+  Major: '1'
+  Minor: '0'
+  Patch: $[counter(variables['Minor'], 1)]
+  VER: '$(Major).$(Minor).$(Patch)'
+
 steps:
 - task: DotNetCoreCLI@2
   inputs:
@@ -19,7 +25,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'off'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'VER'
 
 
 - task: DotNetCoreCLI@2
