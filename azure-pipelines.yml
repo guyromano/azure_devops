@@ -16,8 +16,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.dll'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
-    publishWebProjects: true
-    zipAfterPublish: True
-  displayName: 'publish to azure artifacts'
+    publishVstsFeed: 'bc6b2af7-25bf-4811-96bf-46aae8e070ca/e1d1c81f-4ed1-4254-a6d9-cc69b4f33ae8'
