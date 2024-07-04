@@ -14,24 +14,40 @@ variables:
   Minor: '0'
   Patch: $[counter(variables['Minor'], 1)]
   VER: '$(Major).$(Minor).$(Patch)'
+  isSecond: $[eq(variables['Build.SourceBranch'], 'refs/heads/second')]
+  isMain:  $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
 
-steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
+stages:
+- stage: first
+  condition: eq(variables.isMain, true)
+  jobs:
+  - job: first
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+      displayName: build
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'VER'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/*.csproj'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'VER'
+      displayName: pack
 
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'bc6b2af7-25bf-4811-96bf-46aae8e070ca/e1d1c81f-4ed1-4254-a6d9-cc69b4f33ae8'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: 'bc6b2af7-25bf-4811-96bf-46aae8e070ca/e1d1c81f-4ed1-4254-a6d9-cc69b4f33ae8'
+      displayName: push artifact
+    
+- stage: second
+  condition: eq(variables.isSecond, true)
+  jobs:
+  - job: second
+    steps:
+      - script: echo Hello Stage B!
