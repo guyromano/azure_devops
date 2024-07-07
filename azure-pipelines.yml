@@ -16,7 +16,7 @@ variables:
   Patch: $[counter(variables['Minor'], 1)]
   VER: '$(Major).$(Minor).$(Patch)'
   BRANCH_NAME: $[replace(variables['Build.SourceBranch'], 'refs/heads/', '')]
-  NUGET: $(BRANCH_NAME).$(VER)
+  NUGET: $(BRANCH_NAME)_$(VER)
   isSecond: $[eq(variables['Build.SourceBranch'], 'refs/heads/second')]
   isMain:  $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
 
